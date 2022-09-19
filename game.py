@@ -1,5 +1,7 @@
 """A number-guessing game."""
 
+import random
+
 # greet player
 print("hello!")
 
@@ -8,7 +10,7 @@ name = input("What's your name?: ")
 print(f"Hi {name}, nice to meet you!")
 
 # choose random number between 1 and 100
-number = 30
+number = random.randrange(1,101)
 
 # repeat forever:
 while True:
