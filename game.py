@@ -1,8 +1,14 @@
 """A number-guessing game."""
 
 import random
+import sys
 
 def greeting():
+    """Greets player with their name
+    
+    Greets the player as well as asks for name as input, and reponds with their name
+    """
+    
     # greet player
     print("hello!")
 
@@ -13,6 +19,11 @@ def greeting():
     # choose random number between 1 and 100
 
 def guess_num():
+    """Game where user guesses number from set range
+    
+    Allows user to set their own range, and guess up to 10 times. 
+    """
+
     a = int(input("Set bottom range: "))
     b = int(input("Set upper range: "))
 
@@ -20,28 +31,41 @@ def guess_num():
     guess_count = 1
     scores = []
 
+    computer_play(a,b+1)
+
     while True:
-        if guess_count < 4:
+        # Sets the amount of times a user can guess a number. 
+        if guess_count < 11:
             guess = input(f"Choose a number between {a}-{b}:")
             
+            # Makes sure that the user is inputting a number. 
             if guess.isdigit():
                 guess = int(guess)
 
+                # Makes sure that the guess is in the range of numbers set previously. 
                 if guess in range(a,b+1): 
-            #     if guess is incorrect:
+
+                    # Let's user know if guess is incorrect and adds to the guess count. 
                     if guess > number:
                         print("Too high!")
                         guess_count += 1
+
                     elif guess < number:
                         print("Too low!")
                         guess_count += 1
+
+                    # Let's user know they guessed correctly. 
                     else:
                         print(f"Congrats! {guess} is the correct number. You had {guess_count} attempts.")
+                        # Adds guess amount to scores to keep track of lowest score. 
                         scores.append(guess_count)
                         
                         play_again()
+
+                        # Sorts all scores to select the lowest number as lowest score. 
                         final_score = sorted(scores)
                         print(f"Your best score was {final_score[0]}")
+                        break
                         
                 else:
                     print(f"{guess} is out of range, please choose a number between {a}-{b}.")
@@ -55,9 +79,39 @@ def guess_num():
                 guess_num()
 
 def play_again():
+    """"Asks user if they want to play again"""
+
     answer = input("Do you want to play again? (Y or N): ")
     if answer == "Y" or answer == "y":
-        guess_num()   
+        guess_num()  
+
+def computer_play(a,b):
+    """Asks if the user wants the computer to guess
+    
+    Allows the computer to guess if answer is yes"""
+
+    user_answer = input("Do you want the computer to guess? Y or N: ")
+
+    low_number = a
+    high_number = b
+
+    while True:
+        if user_answer == "y" or user_answer == "Y":
+
+            computer_guess = random.randrange(low_number, high_number)
+            message = input(f"Computer guess = {computer_guess}. Please answer, 'too high', 'too low', or 'you won': ")
+
+            if message.startswith("too high"):
+                high_number = computer_guess
+                new_computer_guess = random.randrange(low_number, high_number)
+            elif message.startswith("too low"):
+                low_number = computer_guess
+                new_computer_guess = random.randrange(low_number, high_number)
+            else:
+                print("I won")
+                sys.exit()
+        else:
+            break
 
 ### Run Program:
 
