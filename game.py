@@ -88,29 +88,40 @@ def play_again():
 def computer_play(a,b):
     """Asks if the user wants the computer to guess
     
-    Allows the computer to guess if answer is yes"""
+    Allows the computer to guess if answer is yes
+    """
 
+    # Asks user if they want to play or have the computer play
     user_answer = input("Do you want the computer to guess? Y or N: ")
 
+    # Assign numbers to computer has bounds
     low_number = a
     high_number = b
 
     while True:
+        # When user wants to play against computer, input yes
         if user_answer == "y" or user_answer == "Y":
 
+            # Computer can randomly guess a number
             computer_guess = random.randrange(low_number, high_number)
             message = input(f"Computer guess = {computer_guess}. Please answer, 'too high', 'too low', or 'you won': ")
 
+            # Lets computer know it is too high and guesses again with number dictating upper range
             if message.startswith("too high"):
                 high_number = computer_guess
                 new_computer_guess = random.randrange(low_number, high_number)
+
+            # Lets computer know it is too low and guesses again with number dictating lower range
             elif message.startswith("too low"):
                 low_number = computer_guess
                 new_computer_guess = random.randrange(low_number, high_number)
+            
+            # if computer wins, let it print they one and exit the game completely
             else:
                 print("I won")
                 sys.exit()
         else:
+            # If they want to guess, then continue with guess_num 
             break
 
 ### Run Program:
